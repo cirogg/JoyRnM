@@ -44,7 +44,7 @@ fun CharacterEntity.toModel() = Character(
     originUrl = originUrl,
     locationName = locationName,
     locationUrl = locationUrl,
-    episodeUrls = episodeUrls.split(",")?.filter { it.isNotBlank() } ?: emptyList()
+    episodeUrls = episodeUrls.split(",").filter { it.isNotBlank() }
 )
 
 fun LocationDto.toDomain() = Location(
