@@ -5,7 +5,6 @@
 [![Koin](https://img.shields.io/badge/DI-Koin-46a2f1?logo=kotlin)](https://insert-koin.io/)
 [![SQLDelight](https://img.shields.io/badge/DB-SQLDelight-ff69b4)](https://cashapp.github.io/sqldelight/)
 [![Ktor](https://img.shields.io/badge/Network-Ktor-0095D5?logo=ktor)](https://ktor.io/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 A **Kotlin Multiplatform** app built with **Compose Multiplatform**, **Koin** for DI, and **SQLDelight** for local persistence.  
 Runs on **Android** and **iOS**, sharing the same codebase while keeping platform-specific integrations.
@@ -99,11 +98,3 @@ fun MainViewController() =
 Configured in platform-specific modules.
 
 ---
-
-## 🤝 Contributing
-PRs are welcome! Feel free to open issues for bugs or feature requests.
-
----
-
-## 📜 License
-MIT License. See [LICENSE](LICENSE) for details.
