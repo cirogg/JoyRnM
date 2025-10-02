@@ -24,6 +24,7 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            export(libs.koin.core)
         }
     }
 
@@ -41,6 +42,7 @@ kotlin {
             implementation(libs.koin.androidx.navigation)
         }
         commonMain.dependencies {
+            api(libs.koin.core)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -70,6 +72,11 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+        }
+    }
+    targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget>().configureEach {
+        binaries.all {
+            linkerOpts("-lsqlite3")
         }
     }
 }

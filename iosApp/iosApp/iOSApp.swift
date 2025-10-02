@@ -2,9 +2,7 @@ import SwiftUI
 
 @main
 struct iOSApp: App {
-    init() {
-        DiKt.initKoinIos()
-    }
+    init() {}
     var body: some Scene {
         WindowGroup {
             ContentView()
