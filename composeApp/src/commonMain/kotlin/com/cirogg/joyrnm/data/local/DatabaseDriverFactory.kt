@@ -2,7 +2,6 @@ package com.cirogg.joyrnm.data.local
 
 import app.cash.sqldelight.db.SqlDriver
 
-// commonMain
 expect class DatabaseDriverFactory {
     fun createDriver(): SqlDriver
 }

@@ -18,7 +18,10 @@ class CharacterLocalDataSource(
             status = entity.status,
             imageUrl = entity.imageUrl,
             originName = entity.originName,
-            locationName = entity.locationName
+            locationName = entity.locationName,
+            originUrl = entity.originUrl,
+            locationUrl = entity.locationUrl,
+            episodeUrls = entity.episodeUrls
         )
     }
 

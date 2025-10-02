@@ -1,6 +1,7 @@
 package com.cirogg.joyrnm.presentation.list
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,7 +25,8 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CharacterListScreen(
-    viewModel: CharacterListViewModel = koinViewModel()
+    viewModel: CharacterListViewModel = koinViewModel(),
+    onCharacterClick: (Long) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
     val listState = rememberLazyListState()
@@ -38,7 +40,7 @@ fun CharacterListScreen(
         snapshotFlow { listState.layoutInfo }
             .collect { layoutInfo ->
                 val lastVisible = layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
-                if (lastVisible >= layoutInfo.totalItemsCount - 3 && layoutInfo.totalItemsCount > 0) { // Ensure totalItemsCount > 0
+                if (lastVisible >= layoutInfo.totalItemsCount - 3 && layoutInfo.totalItemsCount > 0) {
                     viewModel.loadNextPage()
                 }
             }
@@ -47,7 +49,7 @@ fun CharacterListScreen(
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .nestedScroll(scrollBehavior.nestedScrollConnection), // For scrollable TopAppBar
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBar(
                 title = { Text("Characters") },
@@ -69,10 +71,12 @@ fun CharacterListScreen(
             ) {
                 items(state.characters) { character ->
                     CharacterItem(
+                        id = character.id,
                         name = character.name,
                         species = character.species,
                         status = character.status,
-                        imageUrl = character.imageUrl
+                        imageUrl = character.imageUrl,
+                        onCharacterClick = onCharacterClick
                     )
                 }
 
@@ -96,13 +100,17 @@ fun CharacterListScreen(
 
 @Composable
 fun CharacterItem(
+    id: Long,
     name: String,
     species: String,
     status: String,
-    imageUrl: String
+    imageUrl: String,
+    onCharacterClick: (Long) -> Unit
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onCharacterClick(id) },
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(

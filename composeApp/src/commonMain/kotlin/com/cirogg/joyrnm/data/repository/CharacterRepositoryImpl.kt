@@ -5,6 +5,8 @@ import com.cirogg.joyrnm.data.local.CharacterLocalDataSource
 import com.cirogg.joyrnm.data.local.toEntity
 import com.cirogg.joyrnm.data.local.toModel
 import com.cirogg.joyrnm.data.remote.RickAndMortyApi
+import com.cirogg.joyrnm.data.remote.dto.EpisodeDto
+import com.cirogg.joyrnm.data.remote.dto.LocationDto
 import com.cirogg.joyrnm.domain.model.Character
 import com.cirogg.joyrnm.domain.repository.CharacterRepository
 import kotlinx.coroutines.Dispatchers
@@ -33,7 +35,10 @@ class CharacterRepositoryImpl(
                     status = dto.status,
                     imageUrl = dto.image,
                     originName = dto.origin.name,
-                    locationName = dto.location.name
+                    originUrl = dto.origin.url,
+                    locationName = dto.location.name,
+                    locationUrl = dto.location.url,
+                    episodeUrls = dto.episode
                 )
             }
 
@@ -55,5 +60,21 @@ class CharacterRepositoryImpl(
                 Result.Success(emptyList())
             }
         }
+    }
+
+    override suspend fun getCharacterById(id: Long): Character? {
+        return local.getById(id)?.toModel()
+    }
+
+    override suspend fun getLocation(url: String): Result<LocationDto> = try {
+        Result.Success(api.getLocation(url))
+    } catch (t: Throwable) {
+        Result.Error(t)
+    }
+
+    override suspend fun getEpisode(url: String): Result<EpisodeDto> = try {
+        Result.Success(api.getEpisode(url))
+    } catch (t: Throwable) {
+        Result.Error(t)
     }
 }

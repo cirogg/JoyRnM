@@ -10,6 +10,6 @@ val iosDatabaseModule = module {
 
 fun initKoinIos() {
     startKoin {
-        modules(appModules + iosDatabaseModule) // 👈 suma el módulo iOS
+        modules(appModules + iosDatabaseModule)
     }
 }

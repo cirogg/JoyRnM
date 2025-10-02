@@ -7,5 +7,5 @@ data class CharacterListState(
     val characters: List<Character> = emptyList(),
     val error: String? = null,
     val endReached: Boolean = false,
-    val currentPage: Int = 1
+    val currentPage: Int = 0
 )

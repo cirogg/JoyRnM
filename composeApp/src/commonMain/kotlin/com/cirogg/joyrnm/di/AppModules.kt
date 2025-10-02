@@ -8,7 +8,9 @@ import com.cirogg.joyrnm.data.remote.RickAndMortyApi
 import com.cirogg.joyrnm.data.remote.RickAndMortyApiImpl
 import com.cirogg.joyrnm.data.repository.CharacterRepositoryImpl
 import com.cirogg.joyrnm.domain.repository.CharacterRepository
+import com.cirogg.joyrnm.domain.usecase.GetCharacterDetailUseCase
 import com.cirogg.joyrnm.domain.usecase.GetCharactersPageUseCase
+import com.cirogg.joyrnm.presentation.detail.CharacterDetailViewModel
 import com.cirogg.joyrnm.presentation.list.CharacterListViewModel
 import com.cirogg.rnm.db.AppDatabase
 import org.koin.core.context.startKoin
@@ -37,17 +39,19 @@ val dataModule = module {
 // --- DOMAIN ---
 val domainModule = module {
     factoryOf(::GetCharactersPageUseCase)
+    factoryOf(::GetCharacterDetailUseCase)
 }
 
 // --- PRESENTATION ---
 val presentationModule = module {
     viewModel { CharacterListViewModel(get()) }
+    viewModel { CharacterDetailViewModel(get()) }
 }
 
 // --- APP MODULES ---
 val appModules = listOf(
     networkModule,
-    databaseModule, // DB primero porque depende de esto
+    databaseModule,
     dataModule,
     domainModule,
     presentationModule

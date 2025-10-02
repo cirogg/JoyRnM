@@ -7,5 +7,8 @@ data class Character(
     val status: String,
     val imageUrl: String,
     val originName: String,
-    val locationName: String
+    val originUrl: String?,
+    val locationName: String,
+    val locationUrl: String?,
+    val episodeUrls: List<String>
 )

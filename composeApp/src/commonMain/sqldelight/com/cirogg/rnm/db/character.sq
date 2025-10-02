@@ -5,7 +5,10 @@ CREATE TABLE characterEntity (
     status TEXT NOT NULL,
     imageUrl TEXT NOT NULL,
     originName TEXT NOT NULL,
-    locationName TEXT NOT NULL
+    locationName TEXT NOT NULL,
+    originUrl TEXT NOT NULL,
+    locationUrl TEXT NOT NULL,
+    episodeUrls TEXT NOT NULL
 );
 
 selectAll:
@@ -15,9 +18,9 @@ selectById:
 SELECT * FROM characterEntity WHERE id = ?;
 
 insertOrReplace:
-INSERT OR REPLACE INTO characterEntity(
-    id, name, species, status, imageUrl, originName, locationName
-) VALUES (?, ?, ?, ?, ?, ?, ?);
+INSERT OR REPLACE INTO characterEntity (
+    id, name, species, status, imageUrl, originName, locationName, originUrl, locationUrl, episodeUrls
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 deleteAll:
 DELETE FROM characterEntity;
