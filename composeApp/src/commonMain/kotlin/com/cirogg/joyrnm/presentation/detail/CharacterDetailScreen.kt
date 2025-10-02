@@ -41,6 +41,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -50,7 +51,9 @@ import com.cirogg.joyrnm.domain.model.Location
 import joyrnm.composeapp.generated.resources.Res
 import joyrnm.composeapp.generated.resources.detail_title
 import joyrnm.composeapp.generated.resources.episodes_title
+import joyrnm.composeapp.generated.resources.loading_message
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -85,12 +88,30 @@ fun CharacterDetailScreen(
                 .padding(innerPadding)
         ) {
             when {
-                state.isLoading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
+                state.isLoading ->
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        CircularProgressIndicator()
+                        Spacer(Modifier.height(40.dp))
+                        Text(
+                            text = stringResource(Res.string.loading_message),
+                            style = TextStyle(
+                                color = Color.Black,
+                                textAlign = TextAlign.Center,
+                                fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                            )
+                        )
+                    }
+
                 state.error != null -> Text(
                     text = "Error: ${state.error}",
                     color = MaterialTheme.colorScheme.error,
                     modifier = Modifier.align(Alignment.Center)
                 )
+
                 state.character != null -> DetailContent(
                     character = state.character!!,
                     location = state.location,
@@ -267,5 +288,25 @@ private fun EpisodeCard(episode: Episode, color: Color) {
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun PreviewDetailLoadingScreen(){
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CircularProgressIndicator()
+        Text(
+            text = stringResource(Res.string.loading_message),
+            style = TextStyle(
+                color = Color.Black,
+                textAlign = TextAlign.Center,
+                fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+            )
+        )
     }
 }
