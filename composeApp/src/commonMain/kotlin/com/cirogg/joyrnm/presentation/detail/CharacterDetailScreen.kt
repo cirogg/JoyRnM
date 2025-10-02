@@ -47,6 +47,10 @@ import coil3.compose.AsyncImage
 import com.cirogg.joyrnm.domain.model.Character
 import com.cirogg.joyrnm.domain.model.Episode
 import com.cirogg.joyrnm.domain.model.Location
+import joyrnm.composeapp.generated.resources.Res
+import joyrnm.composeapp.generated.resources.detail_title
+import joyrnm.composeapp.generated.resources.episodes_title
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -65,7 +69,7 @@ fun CharacterDetailScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(state.character?.name ?: "Detalle") },
+                title = { Text(state.character?.name ?: stringResource(Res.string.detail_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
@@ -202,7 +206,7 @@ fun CharacterHeaderCard(
 private fun EpisodesGrid(episodes: List<Episode>) {
     if (episodes.isEmpty()) return
     Text(
-        "Episodes",
+        stringResource(Res.string.episodes_title),
         style = MaterialTheme.typography.titleLarge,
         modifier = Modifier.padding(bottom = 8.dp)
     )
@@ -229,7 +233,7 @@ private fun EpisodeCard(episode: Episode, color: Color) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(1.2f),
+            .aspectRatio(1.8f),
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = color)
@@ -238,10 +242,12 @@ private fun EpisodeCard(episode: Episode, color: Color) {
             Modifier
                 .fillMaxSize()
                 .padding(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
                 text = episode.episode,
+                textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onPrimaryContainer
             )
